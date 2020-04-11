@@ -1,0 +1,11 @@
+- include growth features
+- include trend label feature
+- train agents on different peer groups
+- go to https://www.sec.gov/edgar/searchedgar/accessing-edgar-data.htm for up-to-date cik, bulk data download, ...
+- eliminate trades that are too small (e.g. changes < 1/(10*#stocks))
+- fix profit_portfolio in BasicSimulator
+- evaluate performance based on max drawdown
+- train agents on different subgroup of a peer group -> apparently it generalizes well to another group of shares within the peer group (e.g. train on KO and PEP, evaluate on MNST and KDP; or try
+    KO -> PEP -> MNST -> KDP (each 1500 timesteps) and evaluate on KDP
+- think about testing: how can we rigorously test timeseries-predictions?
+- try if learning on one peer set also works for other peer sets
