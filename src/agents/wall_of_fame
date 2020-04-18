@@ -1,0 +1,215 @@
+# +-------------------------------+
+# |         Wall of Fame          |
+# +-------------------------------+
+# |        0 transaction fee      |
+# +-------------------------------+
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_1"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_1_log_0_group_0
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_2"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_2_log_1_group_0
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_3"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_3_log_1_group_0
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_4"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_4_log_1_group_0
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_5"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_5_log_1_group_0
+    --> Actually didn't perform well at all
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_6"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_6_log_1_group_0
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_7"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_7_log_1_group_0
+    --> Actually didn't perform well at all
+
+--------
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"test_step_size_5_8"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+test_step_size_5_8_log_1_group_0
+
+--------
+
+# This agent was obtained after training and pre-training on all 8 3-peer-group sets of stocks
+# Every run performed one or two training and pre-training cycles (depending on
+#   the results obtained on those peer groups), 10 000 timesteps and 100 epochs each
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_0"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
+golden_agent_0_log_1_group_<n> for n=0:7
+
+--------
+
+# This agent was obtained after training and pre-training on the full 24-peer-group set of stocks
+# One training and pre-training cycle was performed of 10 000 timesteps and 100 epochs
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_all_groups_0"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+golden_agent_all_groups_0_log_0_group_0
+
+--------
+
+# This agent was obtained after training and pre-training golden_agent_all_groups_0
+#   on the full 24-peer-group set of stocks
+# One training and pre-training cycle was performed of 10 000 timesteps and 100 epochs
+#   for a total of 20 000 timesteps and 200 epochs
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_all_groups_1"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+golden_agent_all_groups_1_log_0_group_0
+
+2019-12-31 00:00:00: 71.31% VS 50.31% base profit
+Sharpe: 1.1507992526613522 VS 0.944786608497322 base
+CAGR: 0.1018002196126746 VS 0.07615624512855623 base
+MDD: -0.2261175322232193 VS -0.2719247213038428 base
+Calmar: 0.4502093164194769 VS 0.28006370573222317 base
+
+-> Very interesting: agent seems to select only a few (if any) stocks per peer group to invest in
+    and maintains fairly stable holdings
+
+--------
+
+# This agent was obtained after training and pre-training golden_agent_all_groups_1
+#   on the full 24-peer-group set of stocks
+# One training and pre-training cycle was performed of 10 000 timesteps and 100 epochs
+#   for a total of 30 000 timesteps and 300 epochs
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_all_groups_2"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+golden_agent_all_groups_2_log_0_group_0
+
+2019-12-31 00:00:00: 44.79% VS 50.31% base profit
+Sharpe: 0.7340391110426802 VS 0.944786608497322 base
+CAGR: 0.0689344925668971 VS 0.07615624512855623 base
+MDD: -0.2699922405398628 VS -0.2719247213038428 base
+Calmar: 0.255320273016214 VS 0.28006370573222317 base
+
+-> Actually doesn't perform that well at all
+
+--------
+
+# This agent was obtained after training and pre-training golden_agent_all_groups_2
+#   on the full 24-peer-group set of stocks
+# One training and pre-training cycle was performed of 10 000 timesteps and 200 epochs
+#   for a total of 40 000 timesteps and 500 epochs
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_all_groups_3"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+golden_agent_all_groups_3_log_0_group_0
+
+2019-12-31 00:00:00: 73.43% VS 50.31% base profit
+Sharpe: 1.1370161090537927 VS 0.944786608497322 base
+CAGR: 0.10424495516131738 VS 0.07615624512855623 base
+MDD: -0.22331643857691863 VS -0.2719247213038428 base
+Calmar: 0.4668037687938117 VS 0.28006370573222317 base
+
+--------
+
+# This agent was obtained after training and pre-training golden_agent_all_groups_3
+#   on the full 24-peer-group set of stocks
+# One training and pre-training cycle was performed of 10 000 timesteps and 200 epochs
+#   for a total of 50 000 timesteps and 700 epochs
+
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+"golden_agent_all_groups_4"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+golden_agent_all_groups_4_log_0_group_0
+
+2019-12-31 00:00:00: 76.02% VS 50.31% base profit
+Sharpe: 1.1455305298626046 VS 0.944786608497322 base
+CAGR: 0.10720567876780218 VS 0.07615624512855623 base
+MDD: -0.2409337315428054 VS -0.2719247213038428 base
+Calmar: 0.4449591930582602 VS 0.28006370573222317 base

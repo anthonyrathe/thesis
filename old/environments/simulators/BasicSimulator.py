@@ -18,7 +18,7 @@ class BasicSimulator:
 		for ticker in tickers:
 			# Collect all open prices (open price is used for BUYs or SELLs, as we would place a market order just
 			# before market open, which would then be filled at the open price)
-			path = os.path.relpath("{}/BRIKSScreener/data/raw/prices/{}.csv".format(dirname(dirname(dirname(dirname(dirname(__file__))))),ticker))
+			path = os.path.relpath("{}/palantirscreener/data/raw/prices/{}.csv".format(dirname(dirname(dirname(dirname(dirname(__file__))))),ticker))
 			open = pd.read_csv(path,index_col=0,parse_dates=True)[['open']]
 			if self.prices is None:
 				self.prices = open

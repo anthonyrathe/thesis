@@ -40,13 +40,6 @@ class MultiRewardEnv(gym.Env):
 			data = pd.read_csv(path,index_col=0,parse_dates=True)
 			data = create_input(data)
 
-
-
-			t = 'CAPR'
-			if ticker == t:
-				self.historical_data.to_csv(".before.csv")
-				data.to_csv(".full_data.csv")
-
 			data = data.dropna()
 
 			if self.historical_data is None:
@@ -55,13 +48,6 @@ class MultiRewardEnv(gym.Env):
 				self.historical_data = pd.concat((self.historical_data,data),axis=1)
 			self.historical_data = self.historical_data.dropna()
 
-			if ticker == t:
-				self.historical_data.to_csv(".after.csv")
-				data.to_csv(".data.csv")
-			print(ticker)
-			#print(data.describe())
-			#print(data.index.min(),data.index.max())
-			print(self.historical_data.index.min(),self.historical_data.index.max())
 
 		self.historical_data = self.historical_data.dropna()
 
@@ -134,6 +120,12 @@ class MultiRewardEnv(gym.Env):
 		elif self.reward == "sortino_diff":
 			reward = sortino-self.sortino
 			self.sortino = sortino
+		elif self.reward == "p&l":
+			if len(self.profits) < 2:
+				reward = 0
+			else:
+				reward = self.profits[-1]-self.profits[-2]
+
 
 		return self.getState().flatten(), reward, done, {'date':self.date}
 
