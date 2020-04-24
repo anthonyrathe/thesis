@@ -3,13 +3,20 @@
   <component name="ChangeListManager">
     <list default="true" id="d647d69d-73eb-48a9-8113-26290933ccfb" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/experiment.py" afterPath="$PROJECT_DIR$/src/agents/experiment.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/experiment_1_a_new.py" afterPath="$PROJECT_DIR$/src/agents/experiment_1_a_new.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/experiment_1_b_new.py" afterPath="$PROJECT_DIR$/src/agents/experiment_1_b_new.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/experiment_2_new.py" afterPath="$PROJECT_DIR$/src/agents/experiment_2_new.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/Experiment 1 b.ipynb" afterPath="$PROJECT_DIR$/src/agents/logs/Experiment 1 b.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_0.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_0.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_1.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_1.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_2.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_2.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_3.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_3.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_4.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_4.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_5.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_5.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_6.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_6.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_7.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_7.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_8.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_8.csv" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_9.csv" afterPath="$PROJECT_DIR$/src/agents/logs/final_base_agent_transaction_costs_{}_log_0_group_9.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_0.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_0.model" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_1.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_1.model" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_2.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_2.model" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_3.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_3.model" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_4.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_4.model" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_5.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/final_base_agent_transaction_costs_5.model" />
@@ -41,7 +48,7 @@
         <entry file="file://$PROJECT_DIR$/src/agents/experiment.py">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="164" column="35" selection-start-line="164" selection-start-column="35" selection-end-line="164" selection-end-column="35" />
+              <caret line="135" column="33" selection-start-line="135" selection-start-column="33" selection-end-line="135" selection-end-column="33" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -74,9 +81,21 @@
       <file leaf-file-name="experiment_1_b_new.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_b_new.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5566406">
-              <caret line="19" column="75" selection-start-line="19" selection-start-column="75" selection-end-line="19" selection-end-column="75" />
+            <state vertical-scroll-proportion="0.46875">
+              <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="experiment_1_b.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_b.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="195" column="47" selection-start-line="195" selection-start-column="13" selection-end-line="195" selection-end-column="47" />
+              <folding>
+                <element signature="e#0#50#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -153,9 +172,9 @@
         <option value="$PROJECT_DIR$/src/agents/experiment_1_b.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_a.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/agents/experiment.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_2_new.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_a_new.py" />
+        <option value="$PROJECT_DIR$/src/agents/experiment.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_b_new.py" />
       </list>
     </option>
@@ -1080,16 +1099,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_b.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="195" column="47" selection-start-line="195" selection-start-column="13" selection-end-line="195" selection-end-column="47" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1108,10 +1117,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_a_new.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/agents/experiment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="164" column="35" selection-start-line="164" selection-start-column="35" selection-end-line="164" selection-end-column="35" />
+          <caret line="135" column="33" selection-start-line="135" selection-start-column="33" selection-end-line="135" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_b.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="195" column="47" selection-start-line="195" selection-start-column="13" selection-end-line="195" selection-end-column="47" />
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>
@@ -1126,18 +1153,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_a_new.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/agents/experiment_1_b_new.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5566406">
-          <caret line="19" column="75" selection-start-line="19" selection-start-column="75" selection-end-line="19" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.46875">
+          <caret line="16" column="11" selection-start-line="16" selection-start-column="11" selection-end-line="16" selection-end-column="11" />
           <folding />
         </state>
       </provider>

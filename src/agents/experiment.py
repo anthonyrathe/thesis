@@ -134,7 +134,6 @@ end_date = datetime.datetime(2020,1,1)
 # |          Environment          |
 # +-------------------------------+
 environment_type = StackedEnvDiff
-#transaction_cost = 0.00000000001
 overall_profit = True
 clip_softmax = True
 
