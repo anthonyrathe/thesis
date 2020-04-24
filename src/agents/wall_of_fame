@@ -8,6 +8,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_1"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -19,6 +21,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_2"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -30,6 +34,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_3"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -41,6 +47,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_4"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -52,6 +60,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_5"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -64,6 +74,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_6"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -75,6 +87,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_7"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -87,6 +101,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "test_step_size_5_8"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -102,6 +118,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_0"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[5])]
@@ -116,6 +134,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_all_groups_0"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
@@ -132,6 +152,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_all_groups_1"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
@@ -157,6 +179,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_all_groups_2"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
@@ -181,6 +205,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_all_groups_3"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
@@ -203,6 +229,8 @@ window = 1
 StackedEnvDiff
 first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
 second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E', 'Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+normalize = peer_normalize
 "golden_agent_all_groups_4"
 policy = SharedStackedPolicy
 net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
@@ -213,3 +241,42 @@ Sharpe: 1.1455305298626046 VS 0.944786608497322 base
 CAGR: 0.10720567876780218 VS 0.07615624512855623 base
 MDD: -0.2409337315428054 VS -0.2719247213038428 base
 Calmar: 0.4449591930582602 VS 0.28006370573222317 base
+
+----------------------------------------------------------------------------
+^^      All agents above this line were trained on flawed input data      ^^
+----------------------------------------------------------------------------
+
+transaction_cost = 0.00000000001
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','Bias_EV/EBITDA_60','Bias_Price_28','R_Price']
+second_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E']
+peer_normalize = ['EV/EBITDA','P/E','P/B','D/E']
+normalize = peer_normalize
+"test_2"
+policy = SharedStackedPolicy
+net_arch=[40,10,'merge',150,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+test_2_log_0_group_n.csv for n=0:7
+
+--------
+# This is a set of agents, obtained by training the following agent for 10 000 timesteps and 100 epochs
+# (non-ultimate expert) on one set of three peer groups. Then the performance was tested on that set of peer groups.
+# The 'base' agent test_subset_features_9 was obtained by training for 10 000 timesteps and 100 epochs
+# (non-ultimate expert) on 5 permutations of each of 8 sets of peer groups.
+
+transaction_cost = 0.00000000001
+window = 1
+StackedEnvDiff
+first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
+second_layer_input_fields = ['tax_rate']
+peer_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + fundamentals_derived_3
+portfolio_normalize = doubles
+z_score_normalize = []
+min_max_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2
+"test_subset_features_9"/"test_subset_features"
+net_arch=[60,10,'merge',50,dict(pi=[40,group_count*group_size+int(include_cash)],vf=[10])]
+test_subset_features_log_n_group_0 for n=0:7
+
+Win-ratio: 75.0%
+Draw-ratio: 12.5%
+Loss-ratio: 12.5%

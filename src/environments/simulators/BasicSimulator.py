@@ -46,22 +46,27 @@ class BasicSimulator:
 		self.date = date
 		return expert_action
 
-	def expert_portfolio(self,date,lookahead_date,clip_softmax=True):
-		# NOTE: this expert assumes zero transaction costs!
+	def expert_portfolio(self,date,lookahead_date,clip_softmax=True,ultimate_expert=False):
+
 		expert_action = np.zeros(len(self.tickers)+1)
 
-		price_deltas = (self.prices.loc[lookahead_date]/self.prices.loc[date]).values-1
-		if clip_softmax:
-			# Set all declining stocks to zero
-			# Assign weight to all other stocks according to the softmax function
-			idx_negative = np.nonzero(price_deltas < 0.0)[0]
-			idx_positive = np.nonzero(price_deltas >= 0.0)[0]
-			expert_action[idx_positive+1] = np.exp(price_deltas[idx_positive])/sum(np.exp(price_deltas[idx_positive]))
-			expert_action[idx_negative+1] = 0.0
-		else:
-			price_deltas = np.insert(price_deltas,0,0.0)
-			expert_action = np.exp(price_deltas)/sum(np.exp(price_deltas))
+		price_deltas = (self.prices.loc[lookahead_date]/self.prices.loc[date]).values-1-self.transaction_cost
 
+		if not ultimate_expert:
+			if clip_softmax:
+				# Set all declining stocks to zero
+				# Assign weight to all other stocks according to the softmax function
+				idx_negative = np.nonzero(price_deltas < 0.0)[0]
+				idx_positive = np.nonzero(price_deltas >= 0.0)[0]
+				expert_action[idx_positive+1] = np.exp(price_deltas[idx_positive])/sum(np.exp(price_deltas[idx_positive]))
+				expert_action[idx_negative+1] = 0.0
+			else:
+				price_deltas = np.insert(price_deltas,0,0.0)
+				expert_action = np.exp(price_deltas)/sum(np.exp(price_deltas))
+		else:
+			best_pos = np.argmax(price_deltas)
+			if price_deltas[best_pos] > 0:
+				expert_action[best_pos+1] = 1.0
 
 		if expert_action.sum() == 0:
 			# Invest everyting in cash
@@ -112,7 +117,8 @@ class BasicSimulator:
 		if profit_this_step == 0.0:
 			print(current_portfolio)
 		current_portfolio = current_portfolio/profit_this_step
-		transaction_cost = sum(abs(np.array(new_portfolio[1:])-np.array(current_portfolio[1:])))*self.transaction_cost
+		volume = sum(abs(np.array(new_portfolio[1:])-np.array(current_portfolio[1:])))
+		transaction_cost = volume*self.transaction_cost
 		profit_this_step *= 1 - transaction_cost
 		self.profit *= profit_this_step
 		self.portfolio = new_portfolio
@@ -121,9 +127,9 @@ class BasicSimulator:
 
 
 		if overall_profit:
-			return self.profit
+			return self.profit, volume
 		else:
-			return math.log(profit_this_step)
+			return math.log(profit_this_step), volume
 
 
 

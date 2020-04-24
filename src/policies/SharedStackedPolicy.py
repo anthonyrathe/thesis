@@ -27,7 +27,7 @@ class SharedStackedPolicy(ActorCriticPolicy):
 	:param kwargs: (dict) Extra keyword arguments for the nature CNN feature extraction
 	"""
 
-	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4, n_first_layer_input_features=9, reuse=False, layers=None, net_arch=None,
+	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4, n_first_layer_input_features=9,second_layer=True, reuse=False, layers=None, net_arch=None,
 				 act_fun=tf.tanh, cnn_extractor=nature_cnn, feature_extraction="cnn", **kwargs):
 		super(SharedStackedPolicy, self).__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=reuse,
 												scale=(feature_extraction == "cnn"))
@@ -53,7 +53,7 @@ class SharedStackedPolicy(ActorCriticPolicy):
 				#flattened_inputs = tf.layers.flatten(self.processed_obs)
 				# Split the observation in two sets: first layer features and second layer features
 				pi_latent, vf_latent = mlp_extractor(tf.slice(self.processed_obs,[0,0,0,0],[-1,-1,-1,n_first_layer_input_features]),
-													 tf.slice(self.processed_obs,[0,0,0,n_first_layer_input_features],[-1,-1,-1,-1]),
+													 tf.slice(self.processed_obs,[0,0,0,n_first_layer_input_features],[-1,-1,-1,-1]) if second_layer else None,
 													 net_arch, act_fun, n_groups,group_size)
 
 			self._value_fn = linear(vf_latent, 'vf', 1)
@@ -110,7 +110,8 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 	#group_size = dimensions_1[1] // n_groups
 	latents = [tf.layers.flatten(tf.slice(observations_1,[0,0,i*group_size,0],[-1,-1,group_size,-1])) for i in range(n_groups)]
 
-	flattened_observations_2 = tf.layers.flatten(observations_2)
+	if observations_2 is not None:
+		flattened_observations_2 = tf.layers.flatten(observations_2)
 	#latents_2 = [tf.slice(observations_2,[0,0,i*group_size,0],[-1,-1,group_size,-1]) for i in range(n_groups)]
 
 	latent = None
@@ -123,7 +124,10 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 			if layer == 'merge':
 				assert parallel, "Error: cannot merge net_arch twice!"
 				# Merge the parallel lanes
-				latent = tf.concat(latents+[flattened_observations_2,],1)
+				if observations_2 is not None:
+					latent = tf.concat(latents+[flattened_observations_2,],1)
+				else:
+					latent = tf.concat(latents,1)
 
 				parallel = False
 			elif layer == 'softmax':
@@ -165,7 +169,10 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 				if pi_layer_size == 'merge':
 					assert policy_parallel, "Error: cannot merge policy net_arch twice!"
 					# Merge the parallel lanes
-					latent_policy = tf.concat(latents_policy+[flattened_observations_2,],1)
+					if observations_2 is not None:
+						latent_policy = tf.concat(latents_policy+[flattened_observations_2,],1)
+					else:
+						latent_policy = tf.concat(latents_policy,1)
 					policy_parallel = False
 				elif pi_layer_size == 'softmax':
 					if policy_parallel:
@@ -188,7 +195,10 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 				assert vf_layer_size == 'merge', "Error: unknown keyword {}".format(vf_layer_size)
 				assert value_parallel, "Error: cannot merge policy net_arch twice!"
 				# Merge the parallel lanes
-				latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
+				if observations_2 is not None:
+					latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
+				else:
+					latent_value = tf.concat(latents_value,1)
 				value_parallel = False
 			else:
 				assert isinstance(vf_layer_size, int), "Error: net_arch[-1]['vf'] must only contain integers."

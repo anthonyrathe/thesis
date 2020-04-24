@@ -29,7 +29,7 @@ class SharedStackedRecurrentPolicy(LstmPolicy):
 
 	recurrent = True
 
-	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4, n_first_layer_input_features=9, n_lstm=256, reuse=False, layers=None,
+	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4, n_first_layer_input_features=9, second_layer=True,n_lstm=256, reuse=False, layers=None,
 				 net_arch=None, act_fun=tf.tanh, cnn_extractor=nature_cnn, layer_norm=False, feature_extraction="cnn",
 				 **kwargs):
 		# state_shape = [n_lstm * 2] dim because of the cell and hidden states of the LSTM
@@ -72,11 +72,13 @@ class SharedStackedRecurrentPolicy(LstmPolicy):
 
 			with tf.variable_scope("model", reuse=tf.AUTO_REUSE):
 				observations_1 = tf.slice(self.processed_obs,[0,0,0,0],[-1,-1,-1,n_first_layer_input_features])
-				observations_2 = tf.slice(self.processed_obs,[0,0,0,n_first_layer_input_features],[-1,-1,-1,-1])
+				if second_layer:
+					observations_2 = tf.slice(self.processed_obs,[0,0,0,n_first_layer_input_features],[-1,-1,-1,-1])
 
 				latents = [tf.layers.flatten(tf.slice(observations_1,[0,0,i*group_size,0],[-1,-1,group_size,-1])) for i in range(n_groups)]
 
-				flattened_observations_2 = tf.layers.flatten(observations_2)
+				if second_layer:
+					flattened_observations_2 = tf.layers.flatten(observations_2)
 
 
 				latent = None
@@ -114,7 +116,10 @@ class SharedStackedRecurrentPolicy(LstmPolicy):
 					elif layer == 'merge':
 						assert parallel, "Error: cannot merge net_arch twice!"
 						# Merge the parallel lanes
-						latent = tf.concat(latents+[flattened_observations_2,],1)
+						if second_layer:
+							latent = tf.concat(latents+[flattened_observations_2,],1)
+						else:
+							latent = tf.concat(latents,1)
 						parallel = False
 					elif layer == 'softmax':
 						if parallel:
@@ -149,7 +154,10 @@ class SharedStackedRecurrentPolicy(LstmPolicy):
 						elif pi_layer_size == 'merge':
 							assert policy_parallel, "Error: cannot merge policy net_arch twice!"
 							# Merge the parallel lanes
-							latent_policy = tf.concat(latents_policy+[flattened_observations_2,],1)
+							if second_layer:
+								latent_policy = tf.concat(latents_policy+[flattened_observations_2,],1)
+							else:
+								latent_policy = tf.concat(latents_policy,1)
 							policy_parallel = False
 						elif pi_layer_size == 'softmax':
 							if policy_parallel:
@@ -176,7 +184,10 @@ class SharedStackedRecurrentPolicy(LstmPolicy):
 						elif vf_layer_size == 'merge':
 							assert value_parallel, "Error: cannot merge policy net_arch twice!"
 							# Merge the parallel lanes
-							latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
+							if second_layer:
+								latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
+							else:
+								latent_value = tf.concat(latents_value,1)
 							value_parallel = False
 						else:
 							raise Exception("Error: unknown keyword {}".format(vf_layer_size))

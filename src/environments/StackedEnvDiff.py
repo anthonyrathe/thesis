@@ -9,8 +9,8 @@ import talib
 
 class StackedEnvDiff(StackedEnv):
 
-	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,peer_normalize=[],normalize=[],window=1,a_space='box',step_size=1,**kwargs):
-		super(StackedEnvDiff,self).__init__(groups,transaction_cost,train_test_split=train_test_split,realized=realized,end_date=end_date,reward=reward,include_cash=include_cash,clip_softmax=clip_softmax,peer_normalize=peer_normalize,normalize=normalize,window=window,a_space=a_space,step_size=step_size,**kwargs)
+	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,first_layer_features=[],second_layer_features=[],peer_normalize=[],z_score_normalize=[],min_max_normalize=[],portfolio_normalize=[],window=1,a_space='box',step_size=1,train_end_date=None,**kwargs):
+		super(StackedEnvDiff,self).__init__(groups,transaction_cost,train_test_split=train_test_split,realized=realized,end_date=end_date,reward=reward,include_cash=include_cash,clip_softmax=clip_softmax,first_layer_features=first_layer_features,second_layer_features=second_layer_features,peer_normalize=peer_normalize,z_score_normalize=z_score_normalize,min_max_normalize=min_max_normalize,portfolio_normalize=portfolio_normalize,window=window,a_space=a_space,step_size=step_size,train_end_date=train_end_date,**kwargs)
 
 		self.a_space = a_space
 		if a_space == 'box':
@@ -20,7 +20,7 @@ class StackedEnvDiff(StackedEnv):
 		else:
 			raise Exception("Unknown action space: {}".format(a_space))
 
-	def step(self,action,test=False):
+	def step(self,action,test=False,default_rebalance=False):
 
 		if action is not None:
 			if not self.include_cash:
@@ -32,9 +32,9 @@ class StackedEnvDiff(StackedEnv):
 				# Interpret the binary vector as the desired positions
 				action = action
 
-		return super(StackedEnvDiff,self).step(action=action,test=test)
+		return super(StackedEnvDiff,self).step(action=action,test=test,default_rebalance=default_rebalance)
 
-	def expert_step(self,lookahead=None,clip_softmax=True):
+	def expert_step(self,lookahead=None,clip_softmax=True,ultimate_expert=False):
 
 		if lookahead is None:
 			lookahead = self.step_size
@@ -43,7 +43,7 @@ class StackedEnvDiff(StackedEnv):
 		lookahead_date = dates[dates.index(self.date)+lookahead]
 
 		portfolio = self.simulator.portfolio
-		desired_portfolio = self.simulator.expert_portfolio(self.date,lookahead_date,clip_softmax=clip_softmax)
+		desired_portfolio = self.simulator.expert_portfolio(self.date,lookahead_date,clip_softmax=clip_softmax,ultimate_expert=ultimate_expert)
 
 		self.date = dates[dates.index(self.date)+self.step_size]
 
