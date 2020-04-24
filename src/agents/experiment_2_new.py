@@ -8,6 +8,7 @@ transaction_cost = 0.00000000001
 total_timesteps = 10000
 ultimate_expert = False
 expert_name = "random_input_"
+pre_training = True
 
 # Train and test the agent
 train = True
@@ -16,4 +17,4 @@ fine_tune = False
 test = True
 load_name = "random_input"
 save_name = "random_input"
-run_experiment(train,load,fine_tune,test,load_name,save_name,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features)
+run_experiment(train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features)

@@ -163,7 +163,6 @@ steps_before_update = 512 # Number of environment steps before network is update
 # +-------------------------------+
 # |         Pre-Training          |
 # +-------------------------------+
-pre_training = True
 n_epochs = 250 # Specify number of epochs to pre-train
 clip_expert_softmax = clip_softmax
 pretrain_batch_size = 32
@@ -212,7 +211,7 @@ def max_drawdown_last_3y(returns):
 def calmar(returns):
 	return cagr(returns)/max_drawdown_last_3y(returns)
 
-def run_experiment(train,load,fine_tune,test,load_name,save_name,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features):
+def run_experiment(train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features):
 	def test_model(models,env,groups,transaction_cost=transaction_cost):
 		env.test_mode()
 		env.transaction_cost=transaction_cost
