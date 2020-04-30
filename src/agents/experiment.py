@@ -141,15 +141,10 @@ clip_softmax = True
 # |       Model parameters        |
 # +-------------------------------+
 RL_algo = PPO2
+gamma = 1.0
 include_cash = True
 step_size = 1
 action_space = 'box'
-window = 1 # Amount of timesteps passed in one observation
-reward_type="p&l"
-policy = SharedStackedPolicy
-net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10])]
-policy_kwargs = dict( net_arch=net_arch,
-				 act_fun=tf.nn.tanh, cnn_extractor=nature_cnn, feature_extraction="mlp")
 
 # +-------------------------------+
 # |           Training            |
@@ -210,7 +205,7 @@ def max_drawdown_last_3y(returns):
 def calmar(returns):
 	return cagr(returns)/max_drawdown_last_3y(returns)
 
-def run_experiment(train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features):
+def run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features):
 	def test_model(models,env,groups,transaction_cost=transaction_cost):
 		env.test_mode()
 		env.transaction_cost=transaction_cost
@@ -277,6 +272,7 @@ def run_experiment(train,load,fine_tune,test,load_name,save_name,pre_training,ul
 		print("CAGR: {} VS {} base".format(cagr(df['Profit']),cagr(df['Base Profit'])))
 		print("MDD: {} VS {} base".format(-max_drawdown_last_3y(df['Profit']),-max_drawdown_last_3y(df['Base Profit'])))
 		print("Calmar: {} VS {} base".format(calmar(df['Profit']),calmar(df['Base Profit'])))
+		print("Turnover: {}".format(round(df['Volume'].sum(),2)))
 		return log
 
 	for test_round in range(test_start_index,test_start_index+n_tests):
@@ -313,30 +309,30 @@ def run_experiment(train,load,fine_tune,test,load_name,save_name,pre_training,ul
 
 				if RL_algo == A2C:
 					if load or training:
-						model = A2C.load(l_name, vect_env, gamma=0.99, n_steps=steps_before_update, vf_coef=0.25, ent_coef=0.01, max_grad_norm=0.5,
+						model = A2C.load(l_name, vect_env, gamma=gamma, n_steps=steps_before_update, vf_coef=0.25, ent_coef=0.01, max_grad_norm=0.5,
 									 learning_rate=learning_rate, alpha=0.99, epsilon=1e-5, lr_schedule='constant', verbose=1, tensorboard_log=tensorboard_log,
 									 _init_setup_model=True, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)
 					else:
-						model = A2C(policy, vect_env, gamma=0.99, n_steps=steps_before_update, vf_coef=0.25, ent_coef=0.01, max_grad_norm=0.5,
+						model = A2C(policy, vect_env, gamma=gamma, n_steps=steps_before_update, vf_coef=0.25, ent_coef=0.01, max_grad_norm=0.5,
 									 learning_rate=learning_rate, alpha=0.99, epsilon=1e-5, lr_schedule='constant', verbose=1, tensorboard_log=tensorboard_log,
 									 _init_setup_model=True, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)
 				elif RL_algo == PPO2:
 					if load or training:
-						model = PPO2.load(l_name, vect_env, gamma=0.99, n_steps=steps_before_update, ent_coef=0.01, learning_rate=learning_rate, vf_coef=0.5,
+						model = PPO2.load(l_name, vect_env, gamma=gamma, n_steps=steps_before_update, ent_coef=0.01, learning_rate=learning_rate, vf_coef=0.5,
 									 max_grad_norm=0.5, lam=0.95, nminibatches=1, noptepochs=4, cliprange=0.2, cliprange_vf=None,
 									 verbose=1, tensorboard_log=tensorboard_log, _init_setup_model=True, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)
 					else:
-						model = PPO2(policy, vect_env, gamma=0.99, n_steps=steps_before_update, ent_coef=0.01, learning_rate=learning_rate, vf_coef=0.5,
+						model = PPO2(policy, vect_env, gamma=gamma, n_steps=steps_before_update, ent_coef=0.01, learning_rate=learning_rate, vf_coef=0.5,
 									 max_grad_norm=0.5, lam=0.95, nminibatches=1, noptepochs=4, cliprange=0.2, cliprange_vf=None,
 									 verbose=1, tensorboard_log=tensorboard_log, _init_setup_model=True, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)
 				elif RL_algo == ACKTR:
 					if load or training:
-						model = ACKTR.load(l_name, vect_env, gamma=0.99, nprocs=None, n_steps=steps_before_update, ent_coef=0.01, vf_coef=0.25,
+						model = ACKTR.load(l_name, vect_env, gamma=gamma, nprocs=None, n_steps=steps_before_update, ent_coef=0.01, vf_coef=0.25,
 										   vf_fisher_coef=1.0, learning_rate=learning_rate, max_grad_norm=0.5, kfac_clip=0.001, lr_schedule='linear',
 										   verbose=1, tensorboard_log=tensorboard_log, _init_setup_model=True, async_eigen_decomp=False,
 										   kfac_update=1, gae_lambda=None, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)
 					else:
-						model = ACKTR(policy, vect_env, gamma=0.99, nprocs=None, n_steps=steps_before_update, ent_coef=0.01, vf_coef=0.25,
+						model = ACKTR(policy, vect_env, gamma=gamma, nprocs=None, n_steps=steps_before_update, ent_coef=0.01, vf_coef=0.25,
 										   vf_fisher_coef=1.0, learning_rate=learning_rate, max_grad_norm=0.5, kfac_clip=0.001, lr_schedule='linear',
 										   verbose=1, tensorboard_log=tensorboard_log, _init_setup_model=True, async_eigen_decomp=False,
 										   kfac_update=1, gae_lambda=None, policy_kwargs=policy_kwargs, full_tensorboard_log=full_tensorboard_log)

@@ -130,12 +130,22 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 					latent = tf.concat(latents,1)
 
 				parallel = False
+			elif layer == 'merge_parallel':
+				assert parallel, "Error: cannot merge net_arch twice!"
+				# Merge the parallel lanes
+				latent = tf.concat(latents,1)
+
+				parallel = False
 			elif layer == 'softmax':
 				if parallel:
 					for i in range(len(latents)):
 						latents[i] = tf.nn.softmax(latents[i])
 				else:
 					latent = tf.nn.softmax(latent)
+			elif layer == 'second_input':
+				assert not parallel, "Error: must merge first, before adding the second input"
+				if observations_2 is not None:
+					latent = tf.concat([latent,flattened_observations_2,],1)
 			else:
 				raise Exception("Error: unknown keyword {}".format(layer))
 		elif isinstance(layer, int):  # Check that this is a shared layer
@@ -174,12 +184,21 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 					else:
 						latent_policy = tf.concat(latents_policy,1)
 					policy_parallel = False
+				elif pi_layer_size == 'merge_parallel':
+					assert policy_parallel, "Error: cannot merge policy net_arch twice!"
+					# Merge the parallel lanes
+					latent_policy = tf.concat(latents_policy,1)
+					policy_parallel = False
 				elif pi_layer_size == 'softmax':
 					if policy_parallel:
 						for i in range(len(latents_policy)):
 							latents_policy[i] = tf.nn.softmax(latents_policy[i])
 					else:
 						latent_policy = tf.nn.softmax(latent_policy)
+				elif pi_layer_size == 'second_input':
+					assert not policy_parallel, "Error: must merge first, before adding the second input"
+					if observations_2 is not None:
+						latent_policy = tf.concat([latent_policy,flattened_observations_2,],1)
 				else:
 					raise Exception("Error: unknown keyword {}".format(pi_layer_size))
 			else:
@@ -192,14 +211,26 @@ def mlp_extractor(observations_1, observations_2, net_arch, act_fun, n_groups, g
 
 		if vf_layer_size is not None:
 			if isinstance(vf_layer_size, str):
-				assert vf_layer_size == 'merge', "Error: unknown keyword {}".format(vf_layer_size)
-				assert value_parallel, "Error: cannot merge policy net_arch twice!"
-				# Merge the parallel lanes
-				if observations_2 is not None:
-					latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
-				else:
+				if vf_layer_size == 'merge':
+					assert value_parallel, "Error: cannot merge policy net_arch twice!"
+					# Merge the parallel lanes
+					if observations_2 is not None:
+						latent_value = tf.concat(latents_value+[flattened_observations_2,],1)
+					else:
+						latent_value = tf.concat(latents_value,1)
+					value_parallel = False
+				elif vf_layer_size == 'merge_parallel':
+					assert value_parallel, "Error: cannot merge policy net_arch twice!"
+					# Merge the parallel lanes
 					latent_value = tf.concat(latents_value,1)
-				value_parallel = False
+					value_parallel = False
+				elif vf_layer_size == 'second_input':
+					assert not value_parallel, "Error: must merge first, before adding the second input"
+					if observations_2 is not None:
+						latent_value = tf.concat([latent_value,flattened_observations_2,],1)
+				else:
+					raise Exception("Error: unknown keyword {}".format(vf_layer_size))
+
 			else:
 				assert isinstance(vf_layer_size, int), "Error: net_arch[-1]['vf'] must only contain integers."
 				if value_parallel:

@@ -1,7 +1,7 @@
 import pandas as pd
 from src.environments.simulators.BasicSimulator import BasicSimulator
 from os.path import dirname as dirname
-import os
+import os, math
 import numpy as np
 import gym
 import talib
@@ -511,6 +511,23 @@ class StackedEnv(gym.Env):
 				reward = 0
 			else:
 				reward = self.profits[-1]-self.profits[-2]
+		elif self.reward.startswith('log(long_term_p&l_'):
+			n = int(self.reward[len('log(long_term_p&l_'):-1])
+			if len(self.profits) < 2:
+				reward = math.log(1)
+			elif len(self.profits) < 200:
+				reward = math.log((self.profits[-1]/self.profits[0])**(1/len(self.profits)))
+			else:
+				reward = math.log(self.profits[-1]/self.profits[-200]**(1/200))
+		elif self.reward.startswith('long_term_p&l_'):
+			n = int(self.reward[len('long_term_p&l_'):])
+			if len(self.profits) < 2:
+				reward = 1
+			elif len(self.profits) < n:
+				reward = (self.profits[-1]-self.profits[0])/len(self.profits)
+			else:
+				reward = (self.profits[-1]-self.profits[-n])/n
+
 
 		self.portfolios.append(self.simulator.portfolio)
 

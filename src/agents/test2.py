@@ -1,29 +1,35 @@
-from src.environments.StackedEnv import StackedEnv
-import numpy as np
-import pandas as pd
-from os.path import dirname as dirname
-import talib
+from src.agents.experiment import run_experiment, all_groups, include_cash
+from stable_baselines.common.policies import nature_cnn
+from src.policies.SharedStackedPolicy import SharedStackedPolicy
+import tensorflow as tf
+group_count = 3
+group_size = len(all_groups[0])
 
-train_test_split = 0.7
-transaction_cost = 0.00000000001
-overall_profit = True
-include_cash = True
-reward_type="p&l"
+first_layer_features = ['EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
+second_layer_features = 'weights'
+n_permutations = 1
+permutation_start_index = 0
+total_timesteps = 10000
+ultimate_expert = False
+expert_name = "long_term_test_1"
+pre_training = False
+window = 5
+reward_type="long_term_p&l_5"
+policy = SharedStackedPolicy
+#net_arch=[60,10,'merge_parallel',30,dict(pi=[20,'second_input',group_count*group_size+int(include_cash)],vf=[10,'second_input'])]
+#net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
+net_arch=[120,10,'merge_parallel',dict(pi=[20,'second_input',group_count*group_size+int(include_cash)],vf=[10,'second_input',])]
+policy_kwargs = dict( net_arch=net_arch,
+				 act_fun=tf.nn.tanh, cnn_extractor=nature_cnn, feature_extraction="mlp")
 
-print("123".format('test'))
 
-s = pd.read_csv("{}/data/raw/yields/monthly_10y_US_treasury_yield.csv".format(dirname(dirname(dirname(__file__)))),index_col=0,parse_dates=True)['Rate']/100
-print(s.rolling(10).mean())
-a = np.array([[-1.,  1.,  1.,  1., -1.,  1., -1.,  1., -1., -1., -1.,  1.],
-			  [-1.,  1.,  1.,  1., -1.,  1., -1.,  1., -1., -1., -1.,  1.],
-			  [-1.,  1., -1., -1.,  1., -1.,  1.,  1.,  1.,  1., -1., -1.]])
-u, indices = np.unique(a, return_inverse=True)
-d = u[np.argmax(np.apply_along_axis(np.bincount, 0, indices.reshape(a.shape),
-                                None, np.max(indices) + 1), axis=0)]
-print(d)
+# Train and test the agent
+transaction_cost = 0.01
+train = True
+load = True
+fine_tune = True
+test = True
+load_name = "testje_2_{}"
+save_name = "testje_2_{}"
+run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features)
 
-groups = [['PEP','KO','KDP','MNST'],['BBY','TGT','WMT','COST'],['FB','GOOGL','AAPL','AMZN']]
-tickers = list(np.array(groups).flatten())
-
-env = StackedEnv(groups,transaction_cost,train_test_split=train_test_split,realized=False,reward=reward_type,include_cash=include_cash,overall_profit=overall_profit)
-print(env.reset())

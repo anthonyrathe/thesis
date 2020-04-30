@@ -74,7 +74,7 @@ class BasicSimulator:
 
 		return expert_action
 
-	def profit_portfolio(self,date,new_portfolio=None,realized=False,overall_profit=True):
+	def profit_portfolio_old(self,date,new_portfolio=None,realized=False,overall_profit=True):
 		# Calculates profit for a portfolio at a certain date.
 		# date is the date of which we use the opening price to calculate the profit of the current positions as well as
 		# the cost basis of the new positions (cfr. new_portfolio).
@@ -122,6 +122,40 @@ class BasicSimulator:
 		profit_this_step *= 1 - transaction_cost
 		self.profit *= profit_this_step
 		self.portfolio = new_portfolio
+		self.date = date
+
+
+
+		if overall_profit:
+			return self.profit, volume
+		else:
+			return math.log(profit_this_step), volume
+
+	def profit_portfolio(self,date,new_portfolio=None,realized=False,overall_profit=True):
+		# Calculates profit for a portfolio at a certain date.
+		# date is the date of which we use the opening price to calculate the profit of the current positions as well as
+		# the cost basis of the new positions (cfr. new_portfolio).
+		# Optionally updates portfolio and deducts transaction costs.
+		# First entry of self.portfolio and new_portfolio is the cash position. The rest corresponds to the tickers, in order.
+		# Assumes price data at certain date is available for all tickers or none.
+
+		if new_portfolio is not None:
+			assert abs(new_portfolio.sum()-1) < 10-4, "Error: new portfolio should sum to 1, got {} which sums to {}".format(new_portfolio,new_portfolio.sum())
+
+		date = max(list(filter(lambda x: x<= date,self.prices.index)))
+		current_portfolio = np.array(self.portfolio)
+
+		if (new_portfolio is None) or (date not in self.prices.index):
+			new_portfolio = current_portfolio
+
+		next_portfolio = new_portfolio*np.insert((self.prices.loc[date]/self.prices.loc[self.date]).values,0,1.0)
+		profit_this_step = sum(next_portfolio)
+		next_portfolio = next_portfolio/sum(next_portfolio)
+		volume = sum(abs(np.array(new_portfolio[1:])-np.array(current_portfolio[1:])))
+		transaction_cost = volume*self.transaction_cost
+		profit_this_step *= 1 - transaction_cost
+		self.profit *= profit_this_step
+		self.portfolio = next_portfolio
 		self.date = date
 
 
