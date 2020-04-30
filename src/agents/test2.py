@@ -27,7 +27,7 @@ policy_kwargs = dict( net_arch=net_arch,
 transaction_cost = 0.01
 train = True
 load = True
-fine_tune = True
+fine_tune = False
 test = True
 load_name = "testje_2_{}"
 save_name = "testje_2_{}"
