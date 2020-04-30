@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d647d69d-73eb-48a9-8113-26290933ccfb" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stable_baselines_additions/MyPPO2.py" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/stable_baselines_additions/mydistributions.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/logs/testje_2_{}_log_0_group_0.csv" afterPath="$PROJECT_DIR$/src/agents/logs/testje_2_{}_log_0_group_0.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/saved_models/testje_2_0.model" afterPath="$PROJECT_DIR$/src/agents/saved_models/testje_2_0.model" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/agents/test2.py" afterPath="$PROJECT_DIR$/src/agents/test2.py" />
     </list>
     <ignored path="thesis.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -52,14 +48,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test2.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/agents/test2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8187134">
+            <state vertical-scroll-proportion="0.0">
               <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
               <folding>
                 <element signature="e#0#74#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.8538012">
+              <caret line="109" column="5" selection-start-line="109" selection-start-column="5" selection-end-line="109" selection-end-column="5" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -118,7 +124,6 @@
         <option value="$PROJECT_DIR$/src/agents/experiment_1.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_b.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_a.py" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/agents/experiment_1_b_new.py" />
         <option value="$PROJECT_DIR$/src/agents/experiment_2_new.py" />
         <option value="$PROJECT_DIR$/src/policies/SharedStackedPolicy.py" />
@@ -130,6 +135,7 @@
         <option value="$PROJECT_DIR$/stable_baselines_additions/MyDiagGaussianProbabilityDistributionType.py" />
         <option value="$PROJECT_DIR$/stable_baselines_additions/mydistributions.py" />
         <option value="$PROJECT_DIR$/src/agents/test2.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -1009,13 +1015,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="20" selection-start-line="108" selection-start-column="20" selection-end-line="108" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/environments/StackedEnvDiff.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.73264784">
@@ -1175,11 +1174,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/agents/test2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8187134">
+        <state vertical-scroll-proportion="0.0">
           <caret line="28" column="11" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
           <folding>
             <element signature="e#0#74#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8538012">
+          <caret line="109" column="5" selection-start-line="109" selection-start-column="5" selection-end-line="109" selection-end-column="5" />
+          <folding />
         </state>
       </provider>
     </entry>

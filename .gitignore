@@ -107,3 +107,4 @@ venv.bak/
 /.idea/
 /src/agents/tensorboard_logs/
 /src/agents/experts/
+.idea
