@@ -50,7 +50,14 @@ class BasicSimulator:
 
 		expert_action = np.zeros(len(self.tickers)+1)
 
-		price_deltas = (self.prices.loc[lookahead_date]/self.prices.loc[date]).values-1-self.transaction_cost
+		dates = list(self.prices.index)
+
+		# Due to how profit_portfolio works, we should shift back a step
+		lookahead_date = dates[dates.index(lookahead_date)-1]
+		date = dates[dates.index(date)-1]
+
+		# Gain should be higher than two times transaction cost, because often we need to re-allocate capital
+		price_deltas = (self.prices.loc[lookahead_date]/self.prices.loc[date]).values-1-self.transaction_cost*2
 
 		if not ultimate_expert:
 			if clip_softmax:
@@ -152,6 +159,7 @@ class BasicSimulator:
 		profit_this_step = sum(next_portfolio)
 		next_portfolio = next_portfolio/sum(next_portfolio)
 		volume = sum(abs(np.array(new_portfolio[1:])-np.array(current_portfolio[1:])))
+		abs_volume = volume*self.profit
 		transaction_cost = volume*self.transaction_cost
 		profit_this_step *= 1 - transaction_cost
 		self.profit *= profit_this_step
@@ -161,9 +169,9 @@ class BasicSimulator:
 
 
 		if overall_profit:
-			return self.profit, volume
+			return self.profit, abs_volume
 		else:
-			return math.log(profit_this_step), volume
+			return math.log(profit_this_step), abs_volume
 
 
 

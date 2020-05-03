@@ -9,8 +9,8 @@ import talib
 
 class StackedEnvDiff(StackedEnv):
 
-	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,first_layer_features=[],second_layer_features=[],peer_normalize=[],z_score_normalize=[],min_max_normalize=[],portfolio_normalize=[],window=1,a_space='box',step_size=1,train_end_date=None,**kwargs):
-		super(StackedEnvDiff,self).__init__(groups,transaction_cost,train_test_split=train_test_split,realized=realized,end_date=end_date,reward=reward,include_cash=include_cash,clip_softmax=clip_softmax,first_layer_features=first_layer_features,second_layer_features=second_layer_features,peer_normalize=peer_normalize,z_score_normalize=z_score_normalize,min_max_normalize=min_max_normalize,portfolio_normalize=portfolio_normalize,window=window,a_space=a_space,step_size=step_size,train_end_date=train_end_date,**kwargs)
+	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,first_layer_features=[],second_layer_features=[],peer_normalize=[],z_score_normalize=[],min_max_normalize=[],portfolio_normalize=[],window=1,a_space='box',step_size=1,train_end_date=None,default_rebalances=False,**kwargs):
+		super(StackedEnvDiff,self).__init__(groups,transaction_cost,train_test_split=train_test_split,realized=realized,end_date=end_date,reward=reward,include_cash=include_cash,clip_softmax=clip_softmax,first_layer_features=first_layer_features,second_layer_features=second_layer_features,peer_normalize=peer_normalize,z_score_normalize=z_score_normalize,min_max_normalize=min_max_normalize,portfolio_normalize=portfolio_normalize,window=window,a_space=a_space,step_size=step_size,train_end_date=train_end_date,default_rebalances=False,**kwargs)
 
 		self.a_space = a_space
 		if a_space == 'box':
@@ -20,8 +20,9 @@ class StackedEnvDiff(StackedEnv):
 		else:
 			raise Exception("Unknown action space: {}".format(a_space))
 
-	def step(self,action,test=False,default_rebalance=False):
+	def step(self,action,test=False,clip_softmax=None):
 
+		default_rebalance = self.default_rebalances
 		if action is not None:
 			if not self.include_cash:
 				action = np.insert(action,0,0.0)
@@ -32,7 +33,7 @@ class StackedEnvDiff(StackedEnv):
 				# Interpret the binary vector as the desired positions
 				action = action
 
-		return super(StackedEnvDiff,self).step(action=action,test=test,default_rebalance=default_rebalance)
+		return super(StackedEnvDiff,self).step(action=action,test=test)
 
 	def expert_step(self,lookahead=None,clip_softmax=True,ultimate_expert=False):
 

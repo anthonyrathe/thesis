@@ -1,5 +1,6 @@
 import pandas as pd
 from src.environments.simulators.BasicSimulator import BasicSimulator
+from src.utils.peer_groups import peer_group_ids, get_id_ticker
 from os.path import dirname as dirname
 import os, math
 import numpy as np
@@ -8,10 +9,11 @@ import talib
 
 class StackedEnv(gym.Env):
 
-	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,first_layer_features=[],second_layer_features=[],peer_normalize=[],z_score_normalize=[],min_max_normalize=[],portfolio_normalize=[],window=1,a_space='box',step_size=1,train_end_date=None,**kwargs):
+	def __init__(self,groups,transaction_cost,train_test_split=0.8,realized=False,end_date=None,reward="sharpe",include_cash=True,clip_softmax=False,first_layer_features=[],second_layer_features=[],peer_normalize=[],z_score_normalize=[],min_max_normalize=[],portfolio_normalize=[],window=1,a_space='box',step_size=1,train_end_date=None,default_rebalances=False,**kwargs):
 		super(StackedEnv, self).__init__()
 
 		self.test = False
+		self.default_rebalances = default_rebalances
 		self.clip_softmax = clip_softmax
 		self.window = window
 		self.step_size = step_size
@@ -95,17 +97,46 @@ class StackedEnv(gym.Env):
 
 		#first_layer_input_fields = ['EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
 		#second_layer_input_fields = []
-		first_layer_input_fields = first_layer_features
-		if second_layer_features == 'weights':
-			second_layer_input_fields = []
+		self.first_weight_field = None
+		if first_layer_features[0] in ('weights','open_positions'):
+			if len(first_layer_features) > 1:
+				first_layer_input_fields = first_layer_features[1:]
+			else:
+				first_layer_input_fields = []
+			self.first_weight_field = first_layer_features[0]
+		else:
+			first_layer_input_fields = first_layer_features
+
+		self.second_weight_field = None
+		if second_layer_features[0] in ('weights','open_positions'):
+			if len(second_layer_features) > 1:
+				second_layer_input_fields = second_layer_features[1:]
+			else:
+				second_layer_input_fields = []
+			self.second_weight_field = second_layer_features[0]
 		else:
 			second_layer_input_fields = second_layer_features
 
+		if 'peer_group_ids' in first_layer_input_fields:
+			first_layer_input_fields.remove('peer_group_ids')
+			first_layer_input_fields += peer_group_ids
+
+		if 'peer_group_ids' in second_layer_input_fields:
+			second_layer_input_fields.remove('peer_group_ids')
+			second_layer_input_fields += peer_group_ids
+
 		input_fields = first_layer_input_fields+second_layer_input_fields
 
-		def create_input(df):
+		def create_input(df,ticker):
 			nb_days_in_year = 252
 			nb_days_margin = 30
+
+			# Generate peer group identifier
+			if True:
+				ticker_id = get_id_ticker(ticker)
+				for id in peer_group_ids:
+					df[id] = int(ticker_id == id)
+
 
 			# Generate fundamentals
 			if True:
@@ -288,8 +319,8 @@ class StackedEnv(gym.Env):
 			for ticker in group:
 				# Collect all historical data
 				path = os.path.relpath("{}/BRIKSScreener/data/cleaned/v2/{}_1_1.csv".format(dirname(dirname(dirname(dirname(__file__)))),ticker))
-				data = pd.read_csv(path,index_col=0,parse_dates=True)
-				data = create_input(data)
+				data = pd.read_csv(path,index_col=0,parse_dates=True,low_memory=False)
+				data = create_input(data,ticker)
 
 				data = data.dropna()
 
@@ -403,14 +434,10 @@ class StackedEnv(gym.Env):
 		self.historical_data = self.historical_data.dropna()
 
 
-		self.feature_set_size = len(input_fields)+2
-		self.first_layer_feature_set_size = len(first_layer_input_fields)+1
-		if second_layer_input_fields == []:
-			self.second_layer_feature_set_size = 0
-		elif second_layer_features == 'weights':
-			self.second_layer_feature_set_size = 1
-		else:
-			self.second_layer_feature_set_size = len(second_layer_input_fields)+1
+
+		self.first_layer_feature_set_size = len(first_layer_input_fields)+(self.first_weight_field is not None)
+		self.second_layer_feature_set_size = len(second_layer_input_fields)+(self.second_weight_field is not None)
+		self.feature_set_size = self.first_layer_feature_set_size + self.second_layer_feature_set_size
 
 
 		self.observation_space = gym.spaces.Box(low=-np.Inf,high=np.Inf,shape=(self.window,len(self.tickers),self.first_layer_feature_set_size+self.second_layer_feature_set_size),dtype=np.float32)
@@ -428,22 +455,51 @@ class StackedEnv(gym.Env):
 		data = data.reshape((self.window,len(self.tickers),int(data.shape[1]/len(self.tickers))))
 		d = []
 		for i in range(self.window):
-			p = self.portfolios[-self.window+i][1:].reshape((-1,1))
-			if self.second_layer_feature_set_size == 0:
-				d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1])))
-			elif self.second_layer_feature_set_size == 1:
-				d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1],p)))
-			else:
-				d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1],p,data[i,:,self.first_layer_feature_set_size-1:])))
+			to_stack = []
+			first_layer_has_weights = int(self.first_weight_field is not None)
+			if self.first_weight_field is not None:
+				if self.first_weight_field == 'open_positions':
+					p = self.portfolios[-self.window+i][1:]
+					p = np.array(list(map(lambda x: 1.0 if x > 0 else -1.0,p)))
+					to_stack.append(p.reshape((-1,1)))
+				else:
+					p = self.portfolios[-self.window + i][1:].reshape((-1, 1))
+					to_stack.append(p)
+
+			to_stack.append(data[i,:,:self.first_layer_feature_set_size-first_layer_has_weights])
+
+			if self.second_weight_field is not None:
+				if self.second_weight_field == 'open_positions':
+					p = self.portfolios[-self.window + i][1:]
+					p = np.array(list(map(lambda x: 1.0 if x > 0 else -1.0, p)))
+					to_stack.append(p.reshape((-1, 1)))
+				else:
+					p = self.portfolios[-self.window + i][1:].reshape((-1, 1))
+					to_stack.append(p)
+
+			if self.second_layer_feature_set_size > 1:
+				to_stack.append(data[i,:,self.first_layer_feature_set_size-first_layer_has_weights:])
+
+			d.append(np.hstack(to_stack))
+			#p = self.portfolios[-self.window+i][1:].reshape((-1,1))
+			#if self.second_layer_feature_set_size == 0:
+			#	d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1])))
+			#elif self.second_layer_feature_set_size == 1:
+			#	d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1],p)))
+			#else:
+			#	d.append(np.hstack((p,data[i,:,:self.first_layer_feature_set_size-1],p,data[i,:,self.first_layer_feature_set_size-1:])))
 		data = np.array(d)
 		return data
 
 
 
-	def step(self,action,test=False,default_rebalance=False):
+	def step(self,action,test=False,clip_softmax=None):
+		default_rebalance = self.default_rebalances
+		if clip_softmax is None:
+			clip_softmax = self.clip_softmax
 		test = test or self.test
 		if action is not None:
-			if self.clip_softmax:
+			if clip_softmax:
 				# If action is -1, then weight should be set at 0
 				# Only non-zero weights should be softmax-ed
 				idx_zero = np.nonzero(action <= 0.0)[0]
@@ -460,19 +516,23 @@ class StackedEnv(gym.Env):
 			# If in some case the action returns an array full of zeros, then just put everything in cash
 			if sum(action) == 0:
 				action[0] = 1.0
+
+			self.last_action = action
 		else:
 			if default_rebalance:
-				action = self.simulator.portfolio
+				#action = self.simulator.portfolio
+				action = self.last_action
 
 		p, v = self.simulator.profit_portfolio(self.date,new_portfolio=action,realized=self.realized,overall_profit=True)
 		self.profits.append(p)
 		self.volumes.append(v)
 
+
 		dates = list(self.historical_data.index)
 
 		if (test and (dates.index(self.date) + self.step_size) >= len(dates)) or (not test and ((dates.index(self.date) + self.step_size) >= int(self.end_of_train_set))):
 			done = True
-			print(self.date)
+			#print(self.date)
 		else:
 			self.date = dates[dates.index(self.date)+self.step_size]
 			done = False
@@ -515,10 +575,10 @@ class StackedEnv(gym.Env):
 			n = int(self.reward[len('log(long_term_p&l_'):-1])
 			if len(self.profits) < 2:
 				reward = math.log(1)
-			elif len(self.profits) < 200:
+			elif len(self.profits) < n:
 				reward = math.log((self.profits[-1]/self.profits[0])**(1/len(self.profits)))
 			else:
-				reward = math.log(self.profits[-1]/self.profits[-200]**(1/200))
+				reward = math.log(self.profits[-1]/self.profits[-n]**(1/n))
 		elif self.reward.startswith('long_term_p&l_'):
 			n = int(self.reward[len('long_term_p&l_'):])
 			if len(self.profits) < 2:
@@ -531,7 +591,7 @@ class StackedEnv(gym.Env):
 
 		self.portfolios.append(self.simulator.portfolio)
 
-		return self.getState(), reward, done, {'date':self.date}
+		return self.getState(), reward, done, {'date':self.date,'profit':self.profits[-1],'portfolio_start': action,'portfolio_end':self.simulator.portfolio,'volume':self.volumes[-1]}
 
 	def expert_step(self,clip_softmax=True,ultimate_expert=False):
 
@@ -560,6 +620,7 @@ class StackedEnv(gym.Env):
 		self.sharpe = 0
 		self.sortino = 0
 		self.portfolios = [self.simulator.portfolio,]*self.window
+		self.last_action = None
 
 		return self.getState()
 
@@ -573,6 +634,7 @@ class StackedEnv(gym.Env):
 		self.dates = [self.date,]
 		self.sharpe = 0
 		self.sortino = 0
+		self.last_action = None
 
 		self.portfolios = [self.simulator.portfolio,]*self.window
 		return self.getState()

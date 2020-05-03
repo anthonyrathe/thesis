@@ -27,7 +27,7 @@ class SharedStackedPolicy(ActorCriticPolicy):
 	:param kwargs: (dict) Extra keyword arguments for the nature CNN feature extraction
 	"""
 
-	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4, n_first_layer_input_features=9,second_layer=True, reuse=False, layers=None, net_arch=None,
+	def __init__(self, sess, ob_space, ac_space, n_env, n_steps, n_batch, n_groups=2, group_size=4,n_first_layer_input_features=9,second_layer=True, reuse=False, layers=None, net_arch=None,
 				 act_fun=tf.tanh, cnn_extractor=nature_cnn, feature_extraction="cnn", **kwargs):
 		super(SharedStackedPolicy, self).__init__(sess, ob_space, ac_space, n_env, n_steps, n_batch, reuse=reuse,
 												scale=(feature_extraction == "cnn"))

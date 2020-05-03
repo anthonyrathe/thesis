@@ -5,7 +5,13 @@ import tensorflow as tf
 group_count = 3
 group_size = len(all_groups[0])
 
-first_layer_features = ['EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
+# +---------------------------------------------------------------------------------------+
+# |                                   Experiment 1 b                                      |
+# +---------------------------------------------------------------------------------------+
+# | Cfr. experiment 1 a, but with transaction costs.									  |
+# +---------------------------------------------------------------------------------------+
+
+first_layer_features = ['weights','EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
 second_layer_features = []
 n_permutations = 1
 permutation_start_index = 0

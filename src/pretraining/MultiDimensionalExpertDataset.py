@@ -31,14 +31,23 @@ class MultiDimensionalExpertDataset(object):
         the data (slower but use less memory for the CI)
     """
 
-    def __init__(self, expert_path=None, traj_data=None, train_fraction=0.7, batch_size=64,
+    def __init__(self, expert_path=None, traj_data=None, train_fraction=0.95, batch_size=64,
                  traj_limitation=-1, randomize=True, verbose=1, sequential_preprocessing=False):
         if traj_data is not None and expert_path is not None:
             raise ValueError("Cannot specify both 'traj_data' and 'expert_path'")
         if traj_data is None and expert_path is None:
             raise ValueError("Must specify one of 'traj_data' or 'expert_path'")
         if traj_data is None:
-            traj_data = np.load(expert_path, allow_pickle=True)
+            traj_data = [np.load(path, allow_pickle=True) for path in expert_path]
+
+        new_traj_data = {key:val for key, val in traj_data[0].items()}
+
+        if len(traj_data) > 1:
+            for t_d in traj_data[1:]:
+                for key, val in t_d.items():
+                    new_traj_data[key] = np.concatenate((new_traj_data[key],val),axis=0)
+
+        traj_data = new_traj_data
 
         if verbose > 0:
             for key, val in traj_data.items():
