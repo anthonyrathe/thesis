@@ -20,29 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d647d69d-73eb-48a9-8113-26290933ccfb" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/agents/experiment_1_a_retry.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_3.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_4.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_5.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_6.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_7.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/agents/super_experiment_8.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/policies/NotSharedStackedPolicy.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/environments/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/environments/simulators/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/exceptions/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/policies/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pretraining/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/utils/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/stable_baselines_additions/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/experiment.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/experiment.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/klad.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/klad.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/logs/Experiment 1 a.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/logs/Experiment 1 a.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/logs/Experiment 1 c.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/logs/Experiment 1 c.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/logs/super_experiment_1_StackedEnv_1e-11_{}_log_0_group_0.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/logs/super_experiment_1_StackedEnv_1e-11_{}_log_0_group_0.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/logs/super_experiment_1_StackedEnv_1e-11_{}_log_0_group_1.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/logs/super_experiment_1_StackedEnv_1e-11_{}_log_0_group_1.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.0002.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.0002.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11_0.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11_0.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11_1.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_1e-11_1.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_2_StackedEnvBinary_1e-11.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_2_StackedEnvBinary_1e-11.model" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_1.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_1.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_2.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/environments/StackedEnv.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/environments/StackedEnv.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -94,9 +81,8 @@
     <property name="FullScreen" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/agents" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/stable_baselines_additions" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="PyConsoleOptionsProvider">
     <option name="myPythonConsoleState">
@@ -115,11 +101,11 @@
       <recent name="$PROJECT_DIR$/old/agents" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\repos\thesis\src\agents" />
-      <recent name="H:\repos\thesis\src\policies" />
-      <recent name="H:\repos\thesis\data\raw\s&amp;p_history" />
+      <recent name="H:\repos\thesis\stable_baselines_additions" />
+      <recent name="H:\repos\thesis\src\environments\simulators" />
       <recent name="H:\repos\thesis\src\environments" />
-      <recent name="$PROJECT_DIR$/src/agents" />
+      <recent name="H:\repos\thesis\src\exceptions" />
+      <recent name="H:\repos\thesis\src\policies" />
     </key>
   </component>
   <component name="RunManager" selected="Python.super_experiment_5">
@@ -347,6 +333,10 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1898" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588630567655" />
+    <state x="461" y="151" key="SettingsEditor" timestamp="1588633687841">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="461" y="151" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588633687841" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
