@@ -67,6 +67,24 @@ while len(all_permutations) < 110:
 	if permutation not in all_permutations:
 		all_permutations.append(permutation)
 
+all_tickers = np.array(all_groups).flatten().tolist()
+all_random_permutations = []
+while len(all_random_permutations) < 110:
+	random_permutation = []
+	for _ in range(group_count):
+		random_group_ids = np.random.choice(range(len(all_tickers)),size=group_size,replace=False)
+		random_group = [all_tickers[i] for i in random_group_ids]
+
+		all_tickers = [all_tickers[i] for i in range(len(all_tickers)) if i not in random_group_ids]
+
+		if all_tickers == []:
+			all_tickers = np.array(all_groups).flatten().tolist()
+
+		random_permutation.append(random_group)
+
+	all_random_permutations.append(random_permutation)
+
+
 #print(all_permutations)
 # Test whether there are any groups not included in the permutation set
 for g in all_groups:
@@ -124,10 +142,15 @@ doubles = ['{}_2'.format(f) for f in fundamentals_1 + fundamentals_derived_1]
 
 macro_economics = ['tax_rate','10y_treasury_rate']
 
-peer_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + fundamentals_derived_3
-portfolio_normalize = doubles
-z_score_normalize = []
-min_max_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + doubles
+#peer_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + fundamentals_derived_3
+#portfolio_normalize = doubles
+#z_score_normalize = []
+#min_max_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + doubles
+
+default_peer_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + fundamentals_derived_3
+default_portfolio_normalize = doubles
+default_z_score_normalize = []
+default_min_max_normalize = fundamentals_1 + fundamentals_derived_1 + fundamentals_derived_2 + doubles
 
 # +-------------------------------+
 # |        Train/Test data        |
@@ -236,7 +259,16 @@ def std_upside(returns,risk_free=None):
 	sigma_excess_returns = excess_returns.std()
 	return sigma_excess_returns
 
-def run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=1,learning_rate=0.01,steps_before_update=512,agent_rebalances=False,environment_type=StackedEnvDiff,n_epochs = 250,verbose_experiment=True):
+def run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=1,learning_rate=0.01,steps_before_update=512,agent_rebalances=False,environment_type=StackedEnvDiff,n_epochs = 250,verbose_experiment=True,peer_group_aware=True,no_peer_normalization=False):
+
+	if no_peer_normalization:
+		peer_normalize = []
+		portfolio_normalize = default_portfolio_normalize + default_peer_normalize
+	else:
+		portfolio_normalize = default_portfolio_normalize
+		peer_normalize = default_peer_normalize
+	z_score_normalize = default_z_score_normalize
+	min_max_normalize = default_min_max_normalize
 
 	def test_model(models,env,groups,transaction_cost=transaction_cost,progbar=None,perm=None):
 		env.test_mode()
@@ -329,7 +361,10 @@ def run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,
 	for test_round in range(test_start_index,test_start_index+n_tests):
 		training = False
 
-		permutations = all_permutations[permutation_start_index:permutation_start_index+n_permutations]
+		if peer_group_aware:
+			permutations = all_permutations[permutation_start_index:permutation_start_index+n_permutations]
+		else:
+			permutations = all_random_permutations[permutation_start_index:permutation_start_index + n_permutations]
 
 		if not verbose_experiment:
 			progbar = Progbar(len(permutations))
@@ -432,11 +467,23 @@ def run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,
 				else:
 					if not verbose_experiment:
 						progbar.update(perm+1)
-def run_concurrent_experiment(window,reward_type,policy,policy_kwargs,load,fine_tune,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=1,learning_rate=0.01,steps_before_update=512,agent_rebalances=False,environment_type=StackedEnvDiff,n_epochs = 250,verbose_experiment=True):
+def run_concurrent_experiment(window,reward_type,policy,policy_kwargs,load,fine_tune,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=1,learning_rate=0.01,steps_before_update=512,agent_rebalances=False,environment_type=StackedEnvDiff,n_epochs = 250,verbose_experiment=True,peer_group_aware=True,no_peer_normalization=False):
 
 	training = False
 
-	permutations = all_permutations[permutation_start_index:permutation_start_index+n_permutations]
+	if no_peer_normalization:
+		peer_normalize = []
+		portfolio_normalize = default_portfolio_normalize + default_peer_normalize
+	else:
+		portfolio_normalize = default_portfolio_normalize
+		peer_normalize = default_peer_normalize
+	z_score_normalize = default_z_score_normalize
+	min_max_normalize = default_min_max_normalize
+
+	if peer_group_aware:
+		permutations = all_permutations[permutation_start_index:permutation_start_index + n_permutations]
+	else:
+		permutations = all_random_permutations[permutation_start_index:permutation_start_index + n_permutations]
 
 	permutation_split = []
 	for i in range(len(permutations)//n_environments):

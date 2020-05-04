@@ -108,7 +108,7 @@ class StackedEnv(gym.Env):
 			first_layer_input_fields = first_layer_features
 
 		self.second_weight_field = None
-		if second_layer_features[0] in ('weights','open_positions'):
+		if len(second_layer_features)> 0 and second_layer_features[0] in ('weights','open_positions'):
 			if len(second_layer_features) > 1:
 				second_layer_input_fields = second_layer_features[1:]
 			else:

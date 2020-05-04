@@ -17,6 +17,8 @@ group_size = len(all_groups[0])
 # +---------------------------------------------------------------------------------------+
 # |                                  Super Experiment 1                                   |
 # +---------------------------------------------------------------------------------------+
+# |                       Peer-group-awareness & specialisation                           |
+# +---------------------------------------------------------------------------------------+
 # | Super experiment testing combinations of:											  |
 # |		- StackedEnv, StackedEnvDiff, StackedEnvBinary									  |
 # |		- 0.0, 0.0002, 0.005 transaction costs											  |
@@ -24,11 +26,11 @@ group_size = len(all_groups[0])
 super_experiment_name = "super_experiment_1"
 
 first_layer_features = ['weights','EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
-second_layer_features = ['weights']
+second_layer_features = []
 n_permutations = 100
 permutation_start_index = 0
 ultimate_expert = False
-expert_name = ""
+expert_name = "no_second_layer"
 pre_training = True
 window = 1
 reward_type="p&l"
@@ -36,7 +38,7 @@ policy = SharedStackedPolicy
 net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
 policy_kwargs = dict( net_arch=net_arch,
 				 act_fun=tf.nn.tanh, cnn_extractor=nature_cnn, feature_extraction="mlp")
-n_environments = 8
+n_environments = 3
 steps_before_update = 512
 agent_rebalances = False
 total_timesteps = 10000
@@ -49,7 +51,7 @@ if __name__ == '__main__':
 			experiment_name = "{}_{}_{}".format(super_experiment_name,str(env_type.__name__),str(transaction_cost))
 
 			# Train the agent
-			learning_rate = 1e-3
+			learning_rate = 1e-2
 			train = True
 			load = False
 			fine_tune = False
@@ -61,7 +63,7 @@ if __name__ == '__main__':
 			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False)
 
 			# Fine-tune and test the agent
-			learning_rate = 1e-4
+			learning_rate = 1e-2
 			train = True
 			load = True
 			fine_tune = True
