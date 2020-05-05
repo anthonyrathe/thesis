@@ -1,5 +1,5 @@
 import silence_tensorflow.auto
-import gym
+import gym, sys
 gym.logger.set_level(40)
 
 from src.agents.experiment import run_experiment, all_groups, include_cash, run_concurrent_experiment
@@ -41,7 +41,7 @@ policy = NotSharedStackedPolicy
 net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
 policy_kwargs = dict( net_arch=net_arch,
 				 act_fun=tf.nn.tanh, cnn_extractor=nature_cnn, feature_extraction="mlp")
-n_environments = 1
+n_environments = 3
 steps_before_update = 512
 agent_rebalances = False
 total_timesteps = 10000
@@ -49,6 +49,10 @@ total_timesteps = 10000
 if __name__ == '__main__':
 	for env_type in [StackedEnv, StackedEnvDiff, StackedEnvBinary]:
 		for transaction_cost in [1e-11, 0.0002, 0.005]:
+			if len(sys.argv) > 2:
+				if [StackedEnv, StackedEnvDiff, StackedEnvBinary].index(env_type) != int(sys.argv[1]) \
+					or [1e-11, 0.0002, 0.005].index(transaction_cost) != int(sys.argv[2]):
+					continue
 			print("Conducting experiment with the following parameters: {}, {}".format(str(env_type.__name__), str(transaction_cost)))
 
 			experiment_name = "{}_{}_{}".format(super_experiment_name,str(env_type.__name__),str(transaction_cost))

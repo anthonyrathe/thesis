@@ -21,7 +21,13 @@
   <component name="ChangeListManager">
     <list default="true" id="d647d69d-73eb-48a9-8113-26290933ccfb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.0002.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.0002.model" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/klad.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/klad.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.005.model" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/saved_models/super_experiment_1_StackedEnv_0.005.model" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_3.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_3.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_4.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_4.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_5.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_5.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_6.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_6.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_7.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_7.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/agents/super_experiment_8.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/agents/super_experiment_8.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -310,26 +316,26 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="740" y="274" key="FileChooserDialogImpl/0.0.1920.1040@0.0.1920.1040" timestamp="1588277341612" />
-    <state width="1898" height="277" key="GridCell.Tab.0.bottom" timestamp="1588671322156">
+    <state width="1898" height="277" key="GridCell.Tab.0.bottom" timestamp="1588710121466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1898" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588671322156" />
-    <state width="1898" height="277" key="GridCell.Tab.0.center" timestamp="1588671322156">
+    <state width="1898" height="277" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588710121466" />
+    <state width="1898" height="277" key="GridCell.Tab.0.center" timestamp="1588710121466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1898" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588671322156" />
-    <state width="1898" height="277" key="GridCell.Tab.0.left" timestamp="1588671322156">
+    <state width="1898" height="277" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588710121466" />
+    <state width="1898" height="277" key="GridCell.Tab.0.left" timestamp="1588710121466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1898" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588671322156" />
-    <state width="1898" height="277" key="GridCell.Tab.0.right" timestamp="1588671322156">
+    <state width="1898" height="277" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588710121466" />
+    <state width="1898" height="277" key="GridCell.Tab.0.right" timestamp="1588710121466">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1898" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588671322156" />
-    <state x="461" y="151" key="SettingsEditor" timestamp="1588633687841">
+    <state width="1898" height="277" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588710121466" />
+    <state x="870" y="177" key="SettingsEditor" timestamp="1588696995080">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="151" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588633687841" />
+    <state x="870" y="177" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1588696995080" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
