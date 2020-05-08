@@ -53,6 +53,7 @@ if __name__ == '__main__':
 				if [StackedEnv, StackedEnvDiff, StackedEnvBinary].index(env_type) != int(sys.argv[1]) \
 					or [1e-11, 0.0002, 0.005].index(transaction_cost) != int(sys.argv[2]):
 					continue
+
 			print("Conducting experiment with the following parameters: {}, {}".format(str(env_type.__name__), str(transaction_cost)))
 
 			experiment_name = "{}_{}_{}".format(super_experiment_name,str(env_type.__name__),str(transaction_cost))
@@ -65,6 +66,9 @@ if __name__ == '__main__':
 			test = False
 			load_name = experiment_name
 			save_name = experiment_name
+
+
+
 
 			print("	Training:")
 			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False,peer_group_aware=peer_group_aware)

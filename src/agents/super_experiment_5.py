@@ -5,6 +5,7 @@ gym.logger.set_level(40)
 from src.agents.experiment import run_experiment, all_groups, include_cash, run_concurrent_experiment
 from stable_baselines.common.policies import nature_cnn
 from src.policies.NotSharedStackedPolicy import NotSharedStackedPolicy
+from src.policies.SharedStackedPolicy import SharedStackedPolicy
 from src.policies.SharedStackedRecurrentPolicy import SharedStackedRecurrentPolicy
 from src.environments.StackedEnvBinary import StackedEnvBinary
 from src.environments.StackedEnvDiff import StackedEnvDiff
@@ -30,15 +31,18 @@ super_experiment_name = "super_experiment_5"
 first_layer_features = ['weights','EV/EBITDA','P/E','P/B','D/E','net_margin','EBITDA_margin','P/FCF','D/A','ROE','QOE_adjusted','EBITDA_CAGR_3y_to_EV/EBITDA','EV/EBITDA_KAMA_ratio_adjusted']
 second_layer_features = []
 peer_group_aware = True
+no_peer_normalization = True
 n_permutations = 100
 permutation_start_index = 0
 ultimate_expert = False
-expert_name = "no_second_layer"
+expert_name = "no_second_layer_portfolio_normalized_peer_group_aware"
 pre_training = True
 window = 1
 reward_type="p&l"
-policy = NotSharedStackedPolicy
-net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
+#policy = NotSharedStackedPolicy
+#net_arch=[60,10,'merge',30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
+policy = SharedStackedPolicy
+net_arch=['merge',120,10*3,30,dict(pi=[20,group_count*group_size+int(include_cash)],vf=[10,])]
 policy_kwargs = dict( net_arch=net_arch,
 				 act_fun=tf.nn.tanh, cnn_extractor=nature_cnn, feature_extraction="mlp")
 n_environments = 3
@@ -67,7 +71,7 @@ if __name__ == '__main__':
 			save_name = experiment_name
 
 			print("	Training:")
-			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False,peer_group_aware=peer_group_aware)
+			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False,peer_group_aware=peer_group_aware,no_peer_normalization=no_peer_normalization)
 
 			# Fine-tune and test the agent
 			learning_rate = 1e-2
@@ -79,5 +83,5 @@ if __name__ == '__main__':
 			save_name = "{}_{}".format(experiment_name,'{}')
 
 			print("	Fine-tuning and testing:")
-			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False,peer_group_aware=peer_group_aware)
+			run_experiment(window,reward_type,policy,policy_kwargs,train,load,fine_tune,test,load_name,save_name,pre_training,ultimate_expert,expert_name,total_timesteps,transaction_cost,permutation_start_index,n_permutations,first_layer_features,second_layer_features,n_environments=n_environments,learning_rate=learning_rate,steps_before_update=steps_before_update,agent_rebalances=agent_rebalances,environment_type=env_type,verbose_experiment=False,peer_group_aware=peer_group_aware,no_peer_normalization=no_peer_normalization)
 
