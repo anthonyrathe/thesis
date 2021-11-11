@@ -40,6 +40,7 @@ In order to get familiar with the codebase for this thesis, it is recommended to
    - provide a binary portfolio vector (**StackedEnvBinary.py**)
    - provide a continuous portfolio "delta" (**StackedEnvDiff.py**)
    - (a fourth environment developed for experimentation only)
+
 Each environment makes use of a simulator (**./simulators/BasicSimulator.py**) that simulates a portfolio based on portfolio vectors provided at regular intervals and actual historical data.
 4. **src/policies/SharedStackedPolicy.py**: this file contains the custom parametrised policy made for this thesis, which allows the user to specify a neural network architecture that takes subsets of the input into identical subnetworks, which are merged into a shared network that eventually splits to produce the expected reward and the expected optimal action (please refer to literature on Proximal Police Optimization for more insights on policy networks)
 
