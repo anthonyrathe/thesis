@@ -3,7 +3,7 @@ English translation: Emulating a Value Investing Strategy with Reinforcement Lea
 by Anthony Rathé
 
 ## About
-This repository contains the source code used during the development of Anthony Rathé's Computer Science Master's thesis. The thesis text and presentation can be found in the root folder: RATHE-Anthony-thesis.pdf and presentatie.anthony.rathe.pdf respectively. Please note that both documents are in Dutch.
+This repository contains the source code used during the development of Anthony Rathé's Computer Science Master's thesis. The thesis text and presentation can be found in the root folder: **RATHE-Anthony-thesis.pdf** and **presentatie.anthony.rathe.pdf** respectively. Please note that both documents are in Dutch.
 
 ## Abstract (Dutch)
 Het beheren van een beleggingsportefeuille biedt een uitdaging die institutionele en private beleggers al meer dan een eeuw in de ban houdt. Sinds enkele decennia worden ook datawetenschappen en artificiële intelligentie ingezet voor het oplossen van dit optimalisatieprobleem. Hierbij zijn echter zowel Reinforcement Learning
