@@ -35,12 +35,10 @@ transactiekosten.
 In order to get familiar with the codebase for this thesis, it is recommended to have a look at the following folders, files and classes in the presented order:
 1. **src/agents/experiment.py**: this file contains the framework for running an experiment as described in the thesis text. In this script we construct the agent, which consists of: a Reinforcement Learning algorithm (for which we use the **stabele baselines** package), an environment in which the agent generates actions and is rewarded and a policy (in essence a neural network) that will determine how the agents transforms the state of the environment into an optimal next action.
 2. **src/agents/experiment_1_a_new.py** and similar: these files contain the actual instances of the experiments as described in the thesis text.
-3. **src/environments**: this folder contains the 3 environments used in this thesis, in which the agent is asked to
-   - provide a continuous portfolio vector (**StackedEnv.py**)
-   - provide a binary portfolio vector (**StackedEnvBinary.py**)
-   - provide a continuous portfolio "delta" (**StackedEnvDiff.py**)
+3. **src/environments**: this folder contains the environments used in this thesis. Each environment makes use of a simulator (**./simulators/BasicSimulator.py**) that simulates a portfolio based on portfolio vectors provided at regular intervals and actual historical data. A total of 3 environments have been developed for this thesis:
+   - Continuous portfolio vector (**StackedEnv.py**)
+   - Binary portfolio vector (**StackedEnvBinary.py**)
+   - Continuous portfolio "delta" (**StackedEnvDiff.py**)
    - (a fourth environment developed for experimentation only)
-
-Each environment makes use of a simulator (**./simulators/BasicSimulator.py**) that simulates a portfolio based on portfolio vectors provided at regular intervals and actual historical data.
 4. **src/policies/SharedStackedPolicy.py**: this file contains the custom parametrised policy made for this thesis, which allows the user to specify a neural network architecture that takes subsets of the input into identical subnetworks, which are merged into a shared network that eventually splits to produce the expected reward and the expected optimal action (please refer to literature on Proximal Police Optimization for more insights on policy networks)
 
