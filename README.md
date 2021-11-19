@@ -33,7 +33,7 @@ transactiekosten.
 
 ## Major folders, files and classes
 In order to get familiar with the codebase for this thesis, it is recommended to have a look at the following folders, files and classes in the presented order:
-1. **src/agents/experiment.py**: this file contains the framework for running an experiment as described in the thesis text. In this script we construct the agent, which consists of: a Reinforcement Learning algorithm (for which we use the **stabele baselines** package), an environment in which the agent generates actions and is rewarded and a policy (in essence a neural network) that will determine how the agents transforms the state of the environment into an optimal next action.
+1. **src/agents/experiment.py**: this file contains the framework for running an experiment as described in the thesis text. In this script we construct the agent, which consists of: a Reinforcement Learning algorithm (for which we use the **stabele baselines** package), an environment in which the agent generates actions and is rewarded and a policy (in essence a neural network) that will determine how the agent transforms the state of the environment into an optimal next action.
 2. **src/agents/experiment_1_a_new.py** and similar: these files contain the actual instances of the experiments as described in the thesis text.
 3. **src/environments**: this folder contains the environments used in this thesis. Each environment makes use of a simulator (**./simulators/BasicSimulator.py**) that simulates a portfolio based on portfolio vectors provided at regular intervals and actual historical data. A total of 3 environments have been developed for this thesis:
    - Continuous portfolio vector (**StackedEnv.py**)
